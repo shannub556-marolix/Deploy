@@ -13,12 +13,12 @@ def application(request):
             get_weather = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city}&units=imperial&APPID={api}").json()
             data={
                     'city' : get_weather['name'],
-                    'temp' : float(get_weather['main']['temp']),
-                    'min_temp': float(get_weather['main']['temp_min']),
-                    'max_temp': float(get_weather['main']['temp_max']),
+                    'temp' : ((float(get_weather['main']['temp'])-32)*5//9),
+                    'min_temp': ((float(get_weather['main']['temp_min'])-32)*5//9),
+                    'max_temp': ((float(get_weather['main']['temp_max'])-32)*5//9),
                     'pressure': get_weather['main']['pressure'],
                     'humidity': get_weather['main']['humidity'],
-                    'feels_like': float(get_weather['main']['feels_like']),
+                    'feels_like': ((float(get_weather['main']['feels_like'])-32)*5//9),
                     'date': datetime.datetime.now()
                 }
             return render(request,'sample1.html',{'x':data})
